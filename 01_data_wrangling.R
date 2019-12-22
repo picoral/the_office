@@ -33,4 +33,25 @@ char_season_token_count %>%
   geom_point() +
   geom_line(aes(group = character))
 
-mean(char_season_token_count$n)
+# remove stop words
+stop_words <- tidytext::stop_words
+clean_the_office_tokens <- the_office_tokens %>%
+  dplyr::anti_join(stop_words, by = "word")
+
+# count number of tokens per character
+clean_char_season_token_count <- clean_the_office_tokens %>%
+  group_by(character, season) %>%
+  count()
+
+# add character info to token count
+clean_char_season_token_count <- left_join(clean_char_season_token_count, 
+                                           character_list)
+
+# plot token count for main characters across seasons
+clean_char_season_token_count %>%
+  filter(type == "Main") %>%
+  ggplot(aes(x = season, y = n, color = character)) +
+  geom_point() +
+  geom_line(aes(group = character))
+
+
