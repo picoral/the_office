@@ -40,18 +40,21 @@ clean_the_office_tokens <- the_office_tokens %>%
 
 # count number of tokens per character
 clean_char_season_token_count <- clean_the_office_tokens %>%
-  group_by(character, season) %>%
-  count()
+  group_by(season, character) %>%
+  summarise(n = n()) %>%
+  mutate(total = sum(n),
+         percentage = (n/sum(n))*100)
 
 # add character info to token count
 clean_char_season_token_count <- left_join(clean_char_season_token_count, 
                                            character_list)
 
-# plot token count for main characters across seasons
+# plot token percentage for main characters across seasons
 clean_char_season_token_count %>%
   filter(type == "Main") %>%
-  ggplot(aes(x = season, y = n, color = character)) +
+  ggplot(aes(x = season, y = percentage, color = character)) +
   geom_point() +
-  geom_line(aes(group = character))
+  geom_line(aes(group = character)) +
+  theme_minimal()
 
 
