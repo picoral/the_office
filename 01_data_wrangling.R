@@ -19,14 +19,18 @@ char_season_token_count <- the_office_tokens %>%
   group_by(character, season) %>%
   count()
 
-
 # load list of main characters
+character_list <- read_csv("data/character_list.csv") %>%
+  separate(character, c("character", "character_lastname"))
 
+# add character info to token count
+char_season_token_count <- left_join(char_season_token_count, character_list)
 
-
-# plot
+# plot token count for main characters across seasons
 char_season_token_count %>%
+  filter(type == "Main") %>%
   ggplot(aes(x = season, y = n, color = character)) +
-  geom_point()
+  geom_point() +
+  geom_line(aes(group = character))
 
 mean(char_season_token_count$n)
