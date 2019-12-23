@@ -22,3 +22,10 @@ talk_time_cis$character <- gsub('character', '', rownames(talk_time_cis))
 
 # bind results together
 talk_time_results <- full_join(talk_time_coef, talk_time_cis)
+
+# get significant symbols
+talk_time_results <- talk_time_results %>%
+  mutate(significant = case_when(`Pr(>|t|)` < .001 ~ '***', 
+                                 `Pr(>|t|)` < .01 ~ '**', 
+                                 `Pr(>|t|)` < .05 ~ '*', 
+                                 TRUE ~ ''))

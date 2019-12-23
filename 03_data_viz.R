@@ -17,11 +17,18 @@ clean_char_season_token_count %>%
   geom_line(aes(group = character)) +
   theme_minimal()
 
+# selected characters
+selected_chars <- c("Michael", "Dwight", "Jim", "Andy", "Pam")
+
 # plot token percentage for main characters across seasons
 clean_char_season_token_count %>%
   filter(type == "Main") %>%
   ggplot(aes(x = as.numeric(season), y = percentage, fill = reorder(character, percentage))) +
-  geom_col(position = "fill") +
+  geom_col(position = "stack") +
+  geom_text(aes(label = ifelse(character %in% selected_chars &
+                                 percentage > 0.04, format(round(percentage/100, 2)), "")), 
+            position = "stack", hjust = 1.1,
+            color = "black") +
   scale_fill_brewer(palette="Set2") +
   theme_minimal() + 
   coord_flip() + 
@@ -37,4 +44,6 @@ talk_time_results %>%
   geom_errorbar(aes(ymin = `2.5 %`, ymax = `97.5 %`), width = .2) +
   theme_minimal() +
   xlab("") +
+  geom_text(aes(label = paste(format(round(Estimate, 2), nsmall = 2), significant))
+            , hjust = -.2, vjust = -.2) +
   ylab("Percentage of talk time alloted per season")
