@@ -25,9 +25,9 @@ char_season_token_count_v2 %>%
   ggplot(aes(x = as.numeric(season), y = percentage, fill = reorder(character, percentage))) +
   geom_col(position = "stack") +
   geom_text(aes(label = ifelse(character %in% selected_chars &
-                                 percentage > 0.04, format(round(percentage/100, 2)), "")), 
+                                 percentage > 0.04, format(round(percentage, 1)), "")), 
             position = "stack", hjust = 1.1,
-            color = "black") +
+            color = "black", size = 3) +
   scale_fill_brewer(palette="Set2") +
   theme_minimal() + 
   coord_flip() + 
