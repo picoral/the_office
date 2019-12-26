@@ -18,11 +18,10 @@ clean_char_season_token_count %>%
   theme_minimal()
 
 # selected characters
-selected_chars <- c("Michael", "Dwight", "Jim", "Andy", "Pam")
+selected_chars <- c("Michael", "Dwight", "Jim", "Andy", "Pam", "Other")
 
 # plot token percentage for main characters across seasons
-clean_char_season_token_count %>%
-  filter(type == "Main") %>%
+char_season_token_count_v2 %>%
   ggplot(aes(x = as.numeric(season), y = percentage, fill = reorder(character, percentage))) +
   geom_col(position = "stack") +
   geom_text(aes(label = ifelse(character %in% selected_chars &
@@ -34,7 +33,7 @@ clean_char_season_token_count %>%
   coord_flip() + 
   ylab("percentage of talk") +
   scale_x_reverse("season", breaks = c(1, 2, 3, 4, 5, 6, 7, 8, 9)) +
-  guides(fill = guide_legend(title = "Character", reverse = TRUE))
+  guides(fill = guide_legend(title = "Character", reverse = TRUE)) 
 
 # plot percentage of talk time for main characters across seasons
 talk_time_results %>%
