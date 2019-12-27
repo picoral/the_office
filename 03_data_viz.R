@@ -28,8 +28,9 @@ linear_regression_chart <- talk_time_results %>%
   geom_point() +
   coord_flip() +
   geom_errorbar(aes(ymin = `2.5 %`, ymax = `97.5 %`), width = .2) +
-  theme_minimal() +
+  theme_economist() +
   xlab("") +
   geom_text(aes(label = paste(format(round(Estimate, 2), nsmall = 2), significant))
             , hjust = -.2, vjust = -.2) +
-  ylab("Percentage of talk time alloted per season")
+  ylab("Percentage of talk time alloted per season") +
+  ggtitle("Talk Time per Character")

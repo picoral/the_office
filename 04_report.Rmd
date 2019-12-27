@@ -9,8 +9,17 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r echo=FALSE}
+```{r echo=FALSE, warning=FALSE, message=FALSE}
 source('01_data_wrangling.R')
 source('02_inferential_stats.R')
 source('03_data_viz.R')
 ```
+
+```{r echo=FALSE}
+linear_regression_chart
+```
+
+```{r echo=FALSE}
+percentage_bar_chart
+```
+
