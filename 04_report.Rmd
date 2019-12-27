@@ -1,0 +1,16 @@
+---
+title: "The Office Transcripts"
+author: "Adriana Picoral"
+date: "12/27/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r echo=FALSE}
+source('01_data_wrangling.R')
+source('02_inferential_stats.R')
+source('03_data_viz.R')
+```

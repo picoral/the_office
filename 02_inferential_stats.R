@@ -7,6 +7,8 @@ talk_time <- clean_char_season_token_count %>%
 
 # no differences across gender, but differences across characters
 summary(aov(percentage ~ gender + Error(character), data = talk_time))
+
+talk_time <- char_season_token_count_v2
 summary(aov(percentage ~ character, data = talk_time))
 
 # linear regression for percentage of talk time predicted by character

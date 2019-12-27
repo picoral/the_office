@@ -1,42 +1,29 @@
 library(RColorBrewer)
+library(ggthemes)
 
-display.brewer.all(colorblindFriendly = TRUE)
-
-# plot token count for main characters across seasons
-char_season_token_count %>%
-  filter(type == "Main") %>%
-  ggplot(aes(x = season, y = n, color = character)) +
-  geom_point() +
-  geom_line(aes(group = character))
+#isplay.brewer.all(colorblindFriendly = TRUE)
+these_breaks = c(1, 2, 3, 4, 5, 6, 7, 8, 9)
+these_labels = paste("Season", these_breaks)
 
 # plot token percentage for main characters across seasons
-clean_char_season_token_count %>%
-  filter(type == "Main") %>%
-  ggplot(aes(x = season, y = percentage, color = character)) +
-  geom_point() +
-  geom_line(aes(group = character)) +
-  theme_minimal()
-
-# selected characters
-selected_chars <- c("Michael", "Dwight", "Jim", "Andy", "Pam", "Other")
-
-# plot token percentage for main characters across seasons
-char_season_token_count_v2 %>%
+percentage_bar_chart <- char_season_token_count_v2 %>%
   ggplot(aes(x = as.numeric(season), y = percentage, fill = reorder(character, percentage))) +
   geom_col(position = "stack") +
-  geom_text(aes(label = ifelse(character %in% selected_chars &
-                                 percentage > 0.04, format(round(percentage, 1)), "")), 
+  geom_text(aes(label = ifelse(percentage > 4, 
+                               format(round(percentage, 1)), "")), 
             position = "stack", hjust = 1.1,
             color = "black", size = 3) +
   scale_fill_brewer(palette="Set2") +
-  theme_minimal() + 
   coord_flip() + 
   ylab("percentage of talk") +
-  scale_x_reverse("season", breaks = c(1, 2, 3, 4, 5, 6, 7, 8, 9)) +
-  guides(fill = guide_legend(title = "Character", reverse = TRUE)) 
+  scale_x_reverse("", breaks = these_breaks,
+                  labels = these_labels) +
+  guides(fill = guide_legend(title = "Character", reverse = TRUE)) +
+  theme_economist() +
+  ggtitle("From Michael to Others as the main character")
 
 # plot percentage of talk time for main characters across seasons
-talk_time_results %>%
+linear_regression_chart <- talk_time_results %>%
   ggplot(aes(x = reorder(character, Estimate), y = Estimate)) +
   geom_point() +
   coord_flip() +
